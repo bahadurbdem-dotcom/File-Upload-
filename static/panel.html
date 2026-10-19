@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b0d12">
+<title>{{SITE}} — অ্যাডমিন</title>
+<style>
+  :root{--bg:#0b0d12;--side:#0e1118;--card:#141821;--card2:#1a2029;--line:#242b38;--txt:#e8eaf0;--mut:#8b93a5;--acc:{{ACCENT}};--ok:#35d49a;--bad:#ff6b6b;--warn:#f5b84b;--r:16px}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Bengali",sans-serif;font-size:15px;line-height:1.45}
+  svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+  aside{background:var(--side);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 8px 16px;font-weight:700;font-size:16px}
+  .brand .lg{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--acc),color-mix(in srgb,var(--acc) 55%,#8b5cf6));color:#fff}
+  .brand span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nb{display:flex;align-items:center;gap:11px;background:none;border:0;color:var(--mut);padding:11px 12px;border-radius:11px;font-size:14.5px;cursor:pointer;text-align:left;width:100%;transition:.15s}
+  .nb:hover{background:var(--card);color:var(--txt)}
+  .nb.on{background:color-mix(in srgb,var(--acc) 16%,transparent);color:var(--acc);font-weight:600}
+  .sp{flex:1}
+  .ver{font-size:11.5px;color:var(--mut);padding:8px 12px}
+  .main{min-width:0}
+  header{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:12px 20px}
+  header h2{font-size:17px;margin:0;flex:1}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:5px 11px;border-radius:99px;background:var(--card2);border:1px solid var(--line);white-space:nowrap}
+  .badge i{width:8px;height:8px;border-radius:50%;background:var(--mut)}
+  .badge.ok i{background:var(--ok);box-shadow:0 0 8px var(--ok)} .badge.bad i{background:var(--bad)}
+  .wrap{padding:20px;max-width:960px;margin:0 auto 90px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:16px}
+  .card h3{margin:0 0 4px;font-size:16px;display:flex;align-items:center;gap:8px}
+  .card .sub{color:var(--mut);font-size:13px;margin:0 0 14px}
+  .hint{color:var(--mut);font-size:13px;line-height:1.55;margin:6px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  label{display:block;font-size:13px;color:var(--mut);margin:14px 0 6px}
+  label:first-child{margin-top:0}
+  input[type=text],input[type=password],input[type=number],input[type=url],textarea,select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#0e1219;color:var(--txt);font-size:15px;outline:none;font-family:inherit;transition:border-color .15s}
+  input:focus,textarea:focus,select:focus{border-color:var(--acc)}
+  input[type=color]{width:46px;height:42px;padding:3px;border-radius:10px;border:1px solid var(--line);background:#0e1219;cursor:pointer}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--acc);color:#fff;border:0;padding:11px 16px;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;font-family:inherit;transition:filter .15s}
+  .btn:hover{filter:brightness(1.1)} .btn:disabled{opacity:.55;cursor:default}
+  .btn.sec{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+  .btn.red{background:#2f1a1f;color:var(--bad);border:1px solid #5a2a31}
+  .btn.sm{padding:7px 11px;font-size:13px;border-radius:9px}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .sw{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+  .sw:first-of-type{border-top:0}
+  .sw .t{flex:1} .sw .t b{display:block;font-size:14.5px;font-weight:600} .sw .t span{font-size:12.5px;color:var(--mut)}
+  .tg{position:relative;width:44px;height:25px;flex:none;margin-top:2px}
+  .tg input{opacity:0;width:100%;height:100%;position:absolute;margin:0;cursor:pointer;z-index:2}
+  .tg i{position:absolute;inset:0;background:#2a3342;border-radius:99px;transition:.2s}
+  .tg i:after{content:"";position:absolute;left:3px;top:3px;width:19px;height:19px;border-radius:50%;background:#fff;transition:.2s}
+  .tg input:checked+i{background:var(--acc)} .tg input:checked+i:after{transform:translateX(19px)}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+  .tile b{font-size:21px;display:block;margin-bottom:2px} .tile span{font-size:12.5px;color:var(--mut)}
+  .drop{border:2px dashed var(--line);border-radius:var(--r);padding:38px 14px;text-align:center;cursor:pointer;color:var(--mut);transition:.15s}
+  .drop:hover,.drop.over{border-color:var(--acc);color:var(--txt);background:color-mix(in srgb,var(--acc) 8%,transparent)}
+  .drop svg{width:34px;height:34px;margin-bottom:8px;color:var(--acc)}
+  .up{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
+  .up .nm{font-size:14px;word-break:break-all}
+  .bar{height:6px;background:#0e1219;border-radius:9px;overflow:hidden;margin:8px 0}
+  .bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .15s}
+  .lnk{display:flex;gap:6px;margin-top:8px}
+  .lnk input{flex:1;font-size:12.5px;padding:9px;min-width:0}
+  .file{display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+  .file:last-child{border:0}
+  .th{width:54px;height:54px;border-radius:11px;background:var(--card2);display:grid;place-items:center;flex:none;overflow:hidden;color:var(--mut)}
+  .th img{width:100%;height:100%;object-fit:cover}
+  .fi{flex:1;min-width:0}
+  .fi .n{font-size:14px;word-break:break-all;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .fi .m{font-size:12px;color:var(--mut);margin-top:3px}
+  .acts{display:flex;gap:6px;flex:none}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .chip{background:var(--card2);border:1px solid var(--line);color:var(--mut);padding:6px 12px;border-radius:99px;font-size:13px;cursor:pointer}
+  .chip.on{background:color-mix(in srgb,var(--acc) 18%,transparent);border-color:var(--acc);color:var(--acc)}
+  .sub-nav{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;padding-bottom:2px}
+  .box{border-radius:12px;padding:11px 13px;font-size:13.5px;margin-bottom:14px;line-height:1.55}
+  .box.warn{background:#2f2713;border:1px solid #5a4a1f;color:var(--warn)}
+  .box.err{background:#2f1a1f;border:1px solid #5a2a31;color:var(--bad)}
+  .box.ok{background:#12291f;border:1px solid #1f5a40;color:var(--ok)}
+  .box.info{background:#14202f;border:1px solid #23405f;color:#8ec5ff}
+  .ck{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .ck:last-child{border:0}
+  .ck .d{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:12px;margin-top:1px}
+  .ck .d.y{background:#12291f;color:var(--ok)} .ck .d.n{background:#2f1a1f;color:var(--bad)}
+  .ck small{display:block;color:var(--mut);font-size:12.5px}
+  .steps{counter-reset:s;margin:0;padding:0;list-style:none}
+  .steps li{counter-increment:s;display:flex;gap:12px;padding:9px 0;font-size:14px}
+  .steps li:before{content:counter(s);width:24px;height:24px;border-radius:50%;background:var(--card2);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;flex:none;color:var(--acc);font-weight:700}
+  .steps li.done:before{content:"✓";background:#12291f;border-color:#1f5a40;color:var(--ok)}
+  .steps li.done{color:var(--mut)}
+  pre{background:#0a0d12;border:1px solid var(--line);border-radius:11px;padding:13px;overflow-x:auto;font-size:12.5px;margin:8px 0;line-height:1.6}
+  .logs{max-height:440px;overflow:auto;font:12px/1.65 ui-monospace,Menlo,Consolas,monospace;background:#0a0d12;border:1px solid var(--line);border-radius:11px;padding:10px}
+  .logs div{white-space:pre-wrap;word-break:break-word} .logs .WARNING{color:var(--warn)} .logs .ERROR{color:var(--bad)} .logs time{color:var(--mut)}
+  a{color:var(--acc)}
+  code{background:var(--card2);padding:1px 6px;border-radius:6px;font-size:12.5px}
+  #toast{position:fixed;left:50%;bottom:84px;transform:translate(-50%,10px);background:#252d3b;border:1px solid var(--line);padding:11px 18px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:.2s;max-width:90vw;z-index:50;box-shadow:0 10px 30px #0008}
+  #toast.show{opacity:1;transform:translate(-50%,0)} #toast.bad{border-color:#5a2a31;color:var(--bad)}
+  .hide{display:none!important}
+  @media(max-width:860px){
+    .app{grid-template-columns:1fr}
+    aside{position:fixed;top:auto;bottom:0;left:0;right:0;height:auto;flex-direction:row;padding:6px 6px calc(6px + env(safe-area-inset-bottom));border-right:0;border-top:1px solid var(--line);z-index:30;gap:2px;justify-content:space-around}
+    .brand,.sp,.ver{display:none}
+    .nb{flex-direction:column;gap:3px;font-size:11px;padding:7px 2px;text-align:center;justify-content:center;flex:1;min-width:0}
+    .nb span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+    .wrap{padding:14px;margin-bottom:96px}
+    header{padding:11px 14px}
+    .tiles{grid-template-columns:1fr 1fr} .grid2{grid-template-columns:1fr}
+    #toast{bottom:92px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand"><div class="lg"><svg class="i" data-i="cloud"></svg></div><span>{{SITE}}</span></div>
+  <button class="nb on" data-t="dash"><svg class="i" data-i="home"></svg><span>ড্যাশবোর্ড</span></button>
+  <button class="nb" data-t="up"><svg class="i" data-i="upload"></svg><span>আপলোড</span></button>
+  <button class="nb" data-t="files"><svg class="i" data-i="folder"></svg><span>ফাইল</span></button>
+  <button class="nb" data-t="set"><svg class="i" data-i="gear"></svg><span>সেটিংস</span></button>
+  <button class="nb" data-t="api"><svg class="i" data-i="code"></svg><span>API</span></button>
+  <button class="nb" data-t="logs"><svg class="i" data-i="list"></svg><span>লগ</span></button>
+  <div class="sp"></div>
+  <div class="ver" id="ver"></div>
+</aside>
+
+<div class="main">
+<header>
+  <h2 id="title">ড্যাশবোর্ড</h2>
+  <span class="badge" id="badge"><i></i><b style="font-weight:500">…</b></span>
+  <button class="btn sec sm" onclick="logout()"><svg class="i" data-i="out"></svg>লগআউট</button>
+</header>
+<div class="wrap">
+  <div id="banner"></div>
+
+  <!-- ড্যাশবোর্ড -->
+  <section id="t-dash">
+    <div id="setupCard" class="card hide">
+      <h3><svg class="i" data-i="rocket"></svg>সেটআপ গাইড</h3>
+      <p class="sub">নিচের ধাপগুলো শেষ হলেই সার্ভার চালু হবে। সবকিছু <b>সেটিংস → টেলিগ্রাম</b> থেকে দেওয়া যায়।</p>
+      <ul class="steps" id="steps"></ul>
+      <div class="row" style="margin-top:8px"><button class="btn" onclick="go('set','tg')">টেলিগ্রাম সেটিংস খুলুন</button></div>
+    </div>
+    <div class="tiles">
+      <div class="tile"><b id="sCount">–</b><span>ফাইল</span></div>
+      <div class="tile"><b id="sSize">–</b><span>মোট সাইজ</span></div>
+      <div class="tile"><b id="cUp">–</b><span>আপলোড (এই সেশনে)</span></div>
+      <div class="tile"><b id="cDown">–</b><span>ডাউনলোড (এই সেশনে)</span></div>
+    </div>
+    <div class="card">
+      <h3><svg class="i" data-i="shield"></svg>কানেকশন স্বাস্থ্য</h3>
+      <p class="sub" id="healthSub">বট, গ্রুপ ও অনুমতি যাচাই করুন।</p>
+      <div id="checks"></div>
+      <div class="row" style="margin-top:12px"><button class="btn sec" onclick="runDiag()">পরীক্ষা করুন</button><button class="btn sec" onclick="reconnect()">রিকানেক্ট</button></div>
+    </div>
+    <div class="card">
+      <h3><svg class="i" data-i="db"></svg>সেটিংস সংরক্ষণ</h3>
+      <div id="persist"></div>
+    </div>
+  </section>
+
+  <!-- আপলোড -->
+  <section id="t-up" class="hide">
+    <div class="card">
+      <div class="drop" id="drop"><svg class="i" data-i="upload"></svg><div><b style="color:var(--txt)">ফাইল বেছে নিন বা এখানে ছেড়ে দিন</b></div><div class="hint">ছবি, ভিডিও, অডিও, HTML, APK, ZIP — যেকোনো ফাইল। সর্বোচ্চ <span id="maxLbl">…</span></div></div>
+      <input type="file" id="pick" multiple class="hide">
+      <div id="queue"></div>
+    </div>
+  </section>
+
+  <!-- ফাইল -->
+  <section id="t-files" class="hide">
+    <div class="card">
+      <div class="row"><input type="text" id="q" placeholder="নাম দিয়ে খুঁজুন…" style="flex:1;min-width:140px"><button class="btn sec" onclick="loadFiles(true);loadStats(true)"><svg class="i" data-i="refresh"></svg></button></div>
+      <div class="chips" id="chips">
+        <span class="chip on" data-k="">সব</span><span class="chip" data-k="image">ছবি</span><span class="chip" data-k="video">ভিডিও</span><span class="chip" data-k="audio">অডিও</span><span class="chip" data-k="file">অন্যান্য</span>
+      </div>
+      <div id="list" style="margin-top:6px"></div>
+      <div class="row" style="margin-top:12px"><button class="btn sec" id="more" onclick="loadFiles(false)">আরও দেখুন</button></div>
+    </div>
+  </section>
+
+  <!-- সেটিংস -->
+  <section id="t-set" class="hide">
+    <div class="sub-nav" id="subnav">
+      <span class="chip on" data-s="tg">টেলিগ্রাম</span><span class="chip" data-s="gen">সাধারণ</span><span class="chip" data-s="sec">নিরাপত্তা</span><span class="chip" data-s="srv">সার্ভার</span>
+    </div>
+
+    <div id="s-tg">
+      <div class="card">
+        <h3><svg class="i" data-i="key"></svg>টেলিগ্রাম কানেকশন</h3>
+        <p class="sub">যেকোনো ঘর আলাদাভাবে বদলানো যায় — খালি রাখলে আগেরটাই থাকবে। সেভ করলে সাথে সাথে নতুন করে কানেক্ট হবে; ব্যর্থ হলে আগের সেটিংসে ফিরে যাবে।</p>
+        <div class="grid2">
+          <div><label>API ID</label><input type="text" id="apiId" inputmode="numeric" placeholder="যেমন 1234567" autocomplete="off"></div>
+          <div><label>API Hash</label><input type="password" id="apiHash" placeholder="৩২ অক্ষরের হেক্স কোড" autocomplete="off"></div>
+        </div>
+        <div class="hint">API ID ও Hash পাবেন <a href="https://my.telegram.org" target="_blank" rel="noopener">my.telegram.org</a> → API development tools থেকে।</div>
+        <label>বট টোকেন</label><input type="password" id="tok" placeholder="123456:ABC-DEF…" autocomplete="off">
+        <div class="hint">@BotFather থেকে নেওয়া টোকেন।</div>
+        <label>গ্রুপ আইডি</label><input type="text" id="gid" placeholder="-1001234567890" autocomplete="off">
+        <div class="hint">প্রাইভেট গ্রুপ/সুপারগ্রুপ। বটকে অ্যাডমিন করুন (Post, Delete, Pin অনুমতিসহ)। আইডি পেতে গ্রুপের মেসেজ @getidsbot-এ ফরওয়ার্ড করুন।</div>
+        <div class="box info" id="tgNow" style="margin-top:12px"></div>
+        <div class="row"><button class="btn" id="tgSave" onclick="saveTg()">সেভ ও কানেক্ট</button><button class="btn sec" onclick="reconnect()">রিকানেক্ট</button></div>
+        <div class="hint">গ্রুপ বদলালে আগের গ্রুপের ফাইলের লিংক অচল হবে (ফাইল পুরোনো গ্রুপেই থাকবে)।</div>
+      </div>
+    </div>
+
+    <div id="s-gen" class="hide">
+      <div class="card">
+        <h3><svg class="i" data-i="gear"></svg>সাধারণ</h3>
+        <p class="sub">প্যানেলের চেহারা ও আপলোডের নিয়ম।</p>
+        <label>সাইটের নাম</label><input type="text" id="c_site_name" maxlength="60">
+        <label>থিমের রঙ</label><div class="row"><input type="color" id="c_accent"><span class="hint" id="accHex"></span></div>
+        <div class="grid2">
+          <div><label>সর্বোচ্চ আপলোড সাইজ (MB, সর্বোচ্চ ১৯৯৯)</label><input type="number" id="c_max_size_mb" min="1" max="1999"></div>
+          <div><label>একসাথে কয়টি আপলোড</label><input type="number" id="c_concurrency" min="1" max="10"></div>
+        </div>
+        <label>নিষিদ্ধ এক্সটেনশন (কমা দিয়ে)</label><input type="text" id="c_blocked_ext" placeholder="exe, bat, scr">
+        <label>ব্রাউজার ক্যাশ সময় (সেকেন্ড, 0 = ক্যাশ নয়)</label><input type="number" id="c_cache_seconds" min="0">
+        <div class="sw" style="margin-top:12px"><div class="t"><b>টেলিগ্রামে ক্যাপশন যোগ করুন</b><span>ফাইলের নাম ও সাইজ মেসেজের ক্যাপশনে দেখাবে</span></div><label class="tg"><input type="checkbox" id="c_caption"><i></i></label></div>
+        <div class="sw"><div class="t"><b>HTML স্যান্ডবক্স</b><span>আপলোড করা HTML/SVG নিরাপদ স্যান্ডবক্সে চলে (প্রস্তাবিত)। বন্ধ করলে পেজ localStorage/কুকি ব্যবহার করতে পারবে।</span></div><label class="tg"><input type="checkbox" id="c_html_sandbox"><i></i></label></div>
+        <div class="row" style="margin-top:12px"><button class="btn" onclick="saveGen('gen')">সেভ করুন</button></div>
+      </div>
+    </div>
+
+    <div id="s-sec" class="hide">
+      <div class="card">
+        <h3><svg class="i" data-i="lock"></svg>অ্যাডমিন পাসওয়ার্ড</h3>
+        <label>বর্তমান পাসওয়ার্ড</label><input type="password" id="pwOld" autocomplete="current-password">
+        <label>নতুন পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)</label><input type="password" id="pwNew" autocomplete="new-password">
+        <div class="row" style="margin-top:12px"><button class="btn" onclick="savePw()">পাসওয়ার্ড বদলান</button></div>
+        <div class="hint">ভুলে গেলে Render Environment-এ <code>ADMIN_PASSWORD</code> দিয়ে ঢুকতে পারবেন।</div>
+      </div>
+      <div class="card">
+        <h3><svg class="i" data-i="shield"></svg>লগইন সুরক্ষা</h3>
+        <div class="grid2">
+          <div><label>ভুল পাসওয়ার্ডের সীমা</label><input type="number" id="c_login_max_fails" min="3" max="20"></div>
+          <div><label>লক থাকার সময় (মিনিট)</label><input type="number" id="c_lockout_minutes" min="1" max="1440"></div>
+        </div>
+        <label>লগইন সেশনের মেয়াদ (দিন)</label><input type="number" id="c_session_days" min="1" max="90">
+        <div class="row" style="margin-top:12px"><button class="btn" onclick="saveGen('sec')">সেভ করুন</button><button class="btn sec" onclick="logoutAll()">সব ডিভাইস থেকে লগআউট</button></div>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--bad)"><svg class="i" data-i="warn"></svg>বিপজ্জনক এলাকা</h3>
+        <p class="sub">লিংক সিক্রেট বদলালে আগের সব লিংক অচল হয়ে যাবে (নতুন লিংক ফাইল তালিকা থেকে পাবেন)।</p>
+        <button class="btn red" onclick="regenSecret()">সব লিংক রিসেট করুন</button>
+      </div>
+    </div>
+
+    <div id="s-srv" class="hide">
+      <div class="card">
+        <h3><svg class="i" data-i="globe"></svg>পাবলিক URL</h3>
+        <p class="sub">লিংকে যে ডোমেইন দেখাবে। খালি রাখলে Render-এর ঠিকানা ব্যবহার হবে।</p>
+        <input type="url" id="pubUrl" placeholder="https://files.example.com">
+        <div class="hint" id="autoUrl"></div>
+        <div class="row" style="margin-top:12px"><button class="btn" onclick="saveSrv()">সেভ করুন</button></div>
+      </div>
+      <div class="card">
+        <h3><svg class="i" data-i="db"></svg>Render ইন্টিগ্রেশন (স্থায়ী সেভ)</h3>
+        <p class="sub">Render-এর ডিস্ক অস্থায়ী — রিস্টার্টে ফাইল মুছে যায়। Render API Key দিলে প্যানেলে বদলানো API ID/Hash, টোকেন, গ্রুপ আইডি ও পাসওয়ার্ড নিজে নিজেই Render Environment-এ সেভ হবে, তাই রিস্টার্টেও হারাবে না।</p>
+        <div class="box info" id="renderNow"></div>
+        <label>Render API Key</label><input type="password" id="rKey" placeholder="rnd_…" autocomplete="off">
+        <div class="hint">Render → Account Settings → API Keys → Create API Key।</div>
+        <label>Render Service ID</label><input type="text" id="rSvc" placeholder="srv-xxxxxxxx">
+        <div class="hint">Render-এ চললে নিজে থেকেই ধরে নেয়। না পেলে সার্ভিসের URL থেকে <code>srv-…</code> অংশ দিন।</div>
+        <div class="row" style="margin-top:12px"><button class="btn" onclick="saveSrv(true)">সেভ ও Render-এ পাঠান</button><button class="btn sec" onclick="renderSync()">এখনই সব মান Render-এ সেভ করুন</button></div>
+      </div>
+      <div class="card">
+        <h3><svg class="i" data-i="server"></svg>সার্ভার</h3>
+        <div class="sw"><div class="t"><b>Keep-alive</b><span>Render ফ্রি প্ল্যানে ঘুমিয়ে না পড়তে নিজেকে পিং করে</span></div><label class="tg"><input type="checkbox" id="c_keepalive"><i></i></label></div>
+        <div class="row" style="margin-top:12px"><button class="btn" onclick="saveGen('srv')">সেভ করুন</button><button class="btn red" onclick="restartSrv()">সার্ভার রিস্টার্ট</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- API -->
+  <section id="t-api" class="hide">
+    <div class="card">
+      <h3><svg class="i" data-i="code"></svg>আপলোড API</h3>
+      <p class="sub">বট, ওয়েবসাইট বা স্ক্রিপ্ট থেকে ফাইল আপলোড/তালিকা/ডিলিট করতে এই কী ব্যবহার করুন।</p>
+      <div class="lnk"><input type="text" id="apikey" readonly><button class="btn sec sm" onclick="copy($('apikey').value)">কপি</button></div>
+      <div class="sw" style="margin-top:10px"><div class="t"><b>API দিয়ে আপলোড চালু</b><span>বন্ধ করলে X-API-Key দিয়ে আপলোড হবে না (প্যানেল থেকে হবে)</span></div><label class="tg"><input type="checkbox" id="c_api_upload"><i></i></label></div>
+      <div class="row" style="margin-top:6px"><button class="btn sm" onclick="saveGen('api')">সেভ</button><button class="btn sec sm" onclick="regenKey()">নতুন কী বানান</button></div>
+    </div>
+    <div class="card">
+      <div class="chips" style="margin:0 0 6px"><span class="chip on" data-e="curl">cURL</span><span class="chip" data-e="py">Python</span><span class="chip" data-e="js">JavaScript</span></div>
+      <pre id="ex"></pre>
+      <div class="hint">রেসপন্স: <code>{"ok":true,"id":123,"name":"photo.jpg","link":"https://…/f/…/photo.jpg"}</code></div>
+      <div class="hint">অন্যান্য: <code>GET /api/files?limit=30&amp;before=0</code> · <code>DELETE /api/files/&lt;id&gt;</code> (দুটোতেই <code>X-API-Key</code> হেডার)</div>
+    </div>
+  </section>
+
+  <!-- লগ -->
+  <section id="t-logs" class="hide">
+    <div class="card">
+      <div class="row" style="margin-bottom:10px"><b style="flex:1">সার্ভার লগ (সাম্প্রতিক)</b><button class="btn sec sm" onclick="loadLogs()"><svg class="i" data-i="refresh"></svg>রিফ্রেশ</button></div>
+      <div class="logs" id="logbox"></div>
+    </div>
+  </section>
+</div>
+</div>
+</div>
+<div id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const human = n => { n = +n || 0; const u = ['B','KB','MB','GB','TB']; let i = 0; while (n >= 1024 && i < 4) { n /= 1024; i++; } return (i ? n.toFixed(2) : n) + ' ' + u[i]; };
+const dur = s => { const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60); return (d ? d + 'দিন ' : '') + (h ? h + 'ঘ ' : '') + m + 'মি'; };
+const IC = {
+  cloud:'<path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.35 8.5 4.5 4.5 0 0 0 7 19z"/>',
+  home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>', upload:'<path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 20h16"/>',
+  folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+  code:'<path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/>', list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+  out:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>',
+  rocket:'<path d="M5 15c-1.5 1.3-2 5-2 5s3.7-.5 5-2"/><path d="M12 15l-3-3a22 22 0 0 1 2-4 12 12 0 0 1 11-5c0 3-1 8-5 11a22 22 0 0 1-4 2z"/><circle cx="15" cy="9" r="1"/>',
+  shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+  db:'<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+  key:'<circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L21 2"/><path d="M17 6l3 3"/>', lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/>',
+  server:'<rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/>',
+  warn:'<path d="M10.3 3.9L2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>',
+  refresh:'<path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 12A9 9 0 0 1 18.5 5.8L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/>',
+  link:'<path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/>',
+  ext:'<path d="M14 3h7v7"/><path d="M21 3l-9 9"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/>',
+  trash:'<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/>',
+  image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/>',
+  video:'<rect x="2" y="5" width="14" height="14" rx="2"/><path d="M16 10l6-3v10l-6-3"/>', audio:'<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+  file:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/>'
+};
+const ico = n => `<svg class="i" viewBox="0 0 24 24">${IC[n] || ''}</svg>`;
+document.querySelectorAll('svg.i[data-i]').forEach(s => { s.setAttribute('viewBox', '0 0 24 24'); s.innerHTML = IC[s.dataset.i] || ''; });
+
+function toast(m, bad) { const t = $('toast'); t.textContent = m; t.className = 'show' + (bad ? ' bad' : ''); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 3200); }
+async function copy(s) { try { await navigator.clipboard.writeText(s); } catch (_) { const i = document.createElement('input'); i.value = s; document.body.appendChild(i); i.select(); document.execCommand('copy'); i.remove(); } toast('কপি হয়েছে'); }
+async function api(path, method, body) {
+  try {
+    const r = await fetch(path, {method: method || 'GET', headers: body ? {'Content-Type': 'application/json'} : {}, body: body ? JSON.stringify(body) : undefined});
+    if (r.status === 401) { location.reload(); return {ok: false, error: 'লগইন দরকার'}; }
+    return await r.json();
+  } catch (_) { return {ok: false, error: 'সার্ভারের সাথে সংযোগ হয়নি'}; }
+}
+async function logout() { await api('/api/logout', 'POST'); location.reload(); }
+async function logoutAll() { if (!confirm('সব ডিভাইসের লগইন বাতিল হবে। চালিয়ে যাবেন?')) return; await api('/api/logout-all', 'POST'); location.reload(); }
+
+// ---- নেভিগেশন
+const TITLES = {dash: 'ড্যাশবোর্ড', up: 'আপলোড', files: 'ফাইল', set: 'সেটিংস', api: 'API', logs: 'লগ'};
+function go(t, sub) {
+  document.querySelectorAll('.nb').forEach(x => x.classList.toggle('on', x.dataset.t === t));
+  Object.keys(TITLES).forEach(k => $('t-' + k).classList.toggle('hide', k !== t));
+  $('title').textContent = TITLES[t];
+  if (sub) subTab(sub);
+  if (t === 'files' && !$('list').children.length) { loadFiles(true); }
+  if (t === 'files' || t === 'dash') loadStats();
+  if (t === 'logs') loadLogs();
+  try { location.hash = t; } catch (_) {}
+}
+document.querySelectorAll('.nb').forEach(b => b.onclick = () => go(b.dataset.t));
+function subTab(s) {
+  document.querySelectorAll('#subnav .chip').forEach(x => x.classList.toggle('on', x.dataset.s === s));
+  ['tg', 'gen', 'sec', 'srv'].forEach(k => $('s-' + k).classList.toggle('hide', k !== s));
+}
+document.querySelectorAll('#subnav .chip').forEach(c => c.onclick = () => subTab(c.dataset.s));
+
+// ---- স্ট্যাটাস
+let ST = {}, formFilled = false;
+const CFG_IDS = ['site_name', 'accent', 'max_size_mb', 'concurrency', 'blocked_ext', 'cache_seconds', 'login_max_fails', 'lockout_minutes', 'session_days'];
+const CFG_BOOLS = ['caption', 'html_sandbox', 'api_upload', 'keepalive'];
+async function loadStatus() {
+  const s = await api('/api/status'); if (!s.ok) return;
+  ST = s;
+  const b = $('badge'); b.className = 'badge ' + (s.connected ? 'ok' : 'bad');
+  b.lastChild.textContent = s.connected ? (s.bot ? '@' + s.bot : 'অনলাইন') : 'অফলাইন';
+  $('ver').textContent = 'v' + s.version + ' · Python ' + s.python;
+  let h = '';
+  if (s.error) h += `<div class="box err">${esc(s.error)}</div>`;
+  if (!s.persist.render && s.persist.on_render) h += `<div class="box warn">সতর্কতা: Render-এ স্থায়ীভাবে সেভ করা হচ্ছে না — রিস্টার্টে সেটিংস হারাতে পারে। <a href="#" onclick="go('set','srv');return false">সেটিংস → সার্ভার</a> থেকে Render API Key দিন।</div>`;
+  $('banner').innerHTML = h;
+  // সেটআপ গাইড
+  const done = [true, s.has_api, !!s.token, !!s.group_id, s.connected];
+  $('setupCard').classList.toggle('hide', s.connected);
+  $('steps').innerHTML = ['অ্যাডমিন পাসওয়ার্ড তৈরি', 'API ID ও API Hash দিন (my.telegram.org)', 'বট টোকেন দিন (@BotFather)', 'গ্রুপ আইডি দিন ও বটকে অ্যাডমিন করুন', 'কানেক্ট হয়েছে']
+    .map((t, i) => `<li class="${done[i] ? 'done' : ''}">${t}</li>`).join('');
+  // কাউন্টার
+  $('cUp').textContent = s.counters.uploads + ' · ' + human(s.counters.upload_bytes);
+  $('cDown').textContent = s.counters.downloads + ' · ' + human(s.counters.download_bytes);
+  $('maxLbl').textContent = s.cfg.max_size_mb + ' MB';
+  // টেলিগ্রাম বর্তমান অবস্থা
+  $('tgNow').innerHTML = `বর্তমান: API ID <b>${esc(s.api_id || 'নেই')}</b> · Hash <b>${esc(s.api_hash || 'নেই')}</b> · টোকেন <b>${esc(s.token || 'নেই')}</b> · গ্রুপ <b>${esc(s.group_title || s.group_id || 'নেই')}</b>${s.group_title && s.group_id ? ' (' + esc(s.group_id) + ')' : ''}`;
+  // সংরক্ষণ
+  const p = s.persist;
+  $('persist').innerHTML =
+    (p.render ? `<div class="box ok">Render API সংযুক্ত — সব মান Render Environment-এ স্থায়ীভাবে সেভ হচ্ছে।${p.sync_msg ? '<br><small>' + esc(p.sync_msg) + '</small>' : ''}</div>`
+              : `<div class="box warn">Render API Key নেই — প্যানেলে দেওয়া মান শুধু সার্ভারের অস্থায়ী ডিস্কে আছে, রিস্টার্ট/রিডিপ্লয়ে মুছে যেতে পারে। <a href="#" onclick="go('set','srv');return false">Render API Key দিন</a> অথবা Render Environment-এ নিজে বসান।</div>`) +
+    `<div class="hint">সাইট সেটিংস, লিংক সিক্রেট ও API কী টেলিগ্রাম গ্রুপের পিন করা এনক্রিপ্টেড মেসেজে সেভ থাকে — তাই এগুলো সবসময় নিরাপদ।${p.env_password ? ' · ADMIN_PASSWORD (রিকভারি) চালু আছে।' : ''}</div>`;
+  // ফর্ম (প্রথমবার)
+  if (!formFilled) {
+    CFG_IDS.forEach(k => { const e = $('c_' + k); if (e) e.value = s.cfg[k]; });
+    CFG_BOOLS.forEach(k => { const e = $('c_' + k); if (e) e.checked = !!s.cfg[k]; });
+    $('accHex').textContent = s.cfg.accent;
+    $('apiId').placeholder = s.api_id || 'যেমন 1234567';
+    $('gid').value = s.group_id || '';
+    $('pubUrl').value = s.public_url || '';
+    $('rSvc').value = s.render_service || '';
+    formFilled = true;
+  }
+  $('autoUrl').textContent = s.auto_url ? 'অটো-ডিটেক্টেড: ' + s.auto_url : 'বর্তমান লিংকের ভিত্তি: ' + s.base_url;
+  $('renderNow').textContent = p.render ? 'কী সেট আছে: ' + (s.render_key || '✓') : 'Render API Key এখনো সেট করা নেই।';
+  $('apikey').value = s.api_key || '';
+  renderEx();
+}
+let exTab = 'curl';
+function renderEx() {
+  const u = ST.base_url || location.origin, k = ST.api_key || '';
+  const ex = {
+    curl: `curl -X PUT "${u}/api/upload" \\\n  -H "X-API-Key: ${k}" \\\n  -H "X-Filename: photo.jpg" \\\n  --data-binary @photo.jpg`,
+    py: `import requests\n\nwith open("photo.jpg", "rb") as f:\n    r = requests.put("${u}/api/upload",\n        headers={"X-API-Key": "${k}", "X-Filename": "photo.jpg"},\n        data=f)\nprint(r.json()["link"])`,
+    js: `const file = document.querySelector("input[type=file]").files[0];\nconst r = await fetch("${u}/api/upload", {\n  method: "PUT",\n  headers: {"X-API-Key": "${k}", "X-Filename": encodeURIComponent(file.name)},\n  body: file\n});\nconsole.log((await r.json()).link);`
+  };
+  $('ex').textContent = ex[exTab];
+}
+document.querySelectorAll('[data-e]').forEach(c => c.onclick = () => { exTab = c.dataset.e; document.querySelectorAll('[data-e]').forEach(x => x.classList.toggle('on', x === c)); renderEx(); });
+$('c_accent').oninput = e => { $('accHex').textContent = e.target.value; };
+loadStatus(); setInterval(loadStatus, 30000);
+
+// ---- স্বাস্থ্য পরীক্ষা
+async function runDiag() {
+  $('checks').innerHTML = '<div class="hint">পরীক্ষা চলছে…</div>';
+  const d = await api('/api/diagnose');
+  if (!d.ok) { $('checks').innerHTML = ''; return toast(d.error || 'ব্যর্থ', true); }
+  $('checks').innerHTML = d.checks.map(c => `<div class="ck"><span class="d ${c.ok ? 'y' : 'n'}">${c.ok ? '✓' : '✕'}</span><div>${esc(c.name)}<small>${esc(c.detail)}</small></div></div>`).join('');
+}
+runDiag(); loadStats();
+
+// ---- আপলোড
+const drop = $('drop'), pick = $('pick');
+drop.onclick = () => pick.click();
+pick.onchange = () => { addFiles(pick.files); pick.value = ''; };
+['dragover', 'dragenter'].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.add('over'); }));
+['dragleave', 'drop'].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', ev => addFiles(ev.dataTransfer.files));
+const Q = []; let running = false;
+function addFiles(fl) {
+  for (const f of fl) {
+    const el = document.createElement('div'); el.className = 'up';
+    el.innerHTML = `<div class="nm">${esc(f.name)} <span class="hint">(${human(f.size)})</span></div><div class="bar"><i></i></div><div class="st hint">অপেক্ষায়…</div>`;
+    $('queue').prepend(el); Q.push({f, el});
+  }
+  if (!running) runQ();
+}
+async function runQ() { running = true; while (Q.length) { const {f, el} = Q.shift(); await upOne(f, el); } running = false; }
+function upOne(f, el) {
+  return new Promise(res => {
+    const bar = el.querySelector('i'), st = el.querySelector('.st');
+    const x = new XMLHttpRequest(); const t0 = Date.now();
+    x.open('PUT', '/api/upload');
+    x.setRequestHeader('X-Filename', encodeURIComponent(f.name));
+    if (f.type) x.setRequestHeader('X-Mime', f.type);
+    x.upload.onprogress = e => { if (e.lengthComputable) { const p = Math.round(e.loaded / e.total * 100); bar.style.width = p + '%'; st.textContent = p + '% · ' + human(e.loaded / ((Date.now() - t0) / 1000 || 1)) + '/s'; } };
+    x.upload.onload = () => { st.textContent = 'টেলিগ্রামে পাঠানো শেষ হচ্ছে…'; };
+    x.onload = () => {
+      let d = {}; try { d = JSON.parse(x.responseText); } catch (_) {}
+      if (d.ok) {
+        bar.style.width = '100%'; bar.style.background = 'var(--ok)'; st.textContent = 'সম্পন্ন';
+        const l = document.createElement('div'); l.className = 'lnk';
+        l.innerHTML = `<input type="text" readonly value="${esc(d.link)}"><button class="btn sm">কপি</button><a class="btn sec sm" target="_blank" rel="noopener" href="${esc(d.link)}">খুলুন</a>`;
+        l.querySelector('button').onclick = () => copy(d.link);
+        el.appendChild(l); $('list').innerHTML = ''; loadStatus();
+      } else { bar.style.background = 'var(--bad)'; st.textContent = '✕ ' + (d.error || 'ব্যর্থ (' + x.status + ')'); st.style.color = 'var(--bad)'; }
+      res();
+    };
+    x.onerror = () => { bar.style.background = 'var(--bad)'; st.textContent = '✕ নেটওয়ার্ক সমস্যা'; res(); };
+    x.send(f);
+  });
+}
+
+// ---- ফাইল
+let nextId = 0, all = [], kind = '';
+async function loadFiles(reset) {
+  if (reset) { nextId = 0; all = []; $('list').innerHTML = ''; }
+  const d = await api('/api/files?limit=30&before=' + nextId);
+  if (!d.ok) { toast(d.error || 'ফাইল আনা যায়নি', true); return; }
+  all = all.concat(d.items); nextId = d.next; $('more').classList.toggle('hide', !d.next);
+  render();
+}
+function render() {
+  const q = $('q').value.trim().toLowerCase();
+  $('list').innerHTML = '';
+  all.filter(i => (!q || i.name.toLowerCase().includes(q)) && (!kind || i.kind === kind)).forEach(i => {
+    const e = document.createElement('div'); e.className = 'file';
+    const th = i.kind === 'image' ? `<img loading="lazy" alt="" src="${esc(i.link)}">` : ico(i.kind);
+    e.innerHTML = `<div class="th">${th}</div><div class="fi"><div class="n">${esc(i.name)}</div><div class="m">${human(i.size)} · ${i.date ? new Date(i.date).toLocaleString('bn-BD') : ''}</div></div><div class="acts"><button class="btn sec sm" data-a="c" title="লিংক কপি">${ico('link')}</button><a class="btn sec sm" target="_blank" rel="noopener" href="${esc(i.link)}" title="খুলুন">${ico('ext')}</a><button class="btn red sm" data-a="d" title="ডিলিট">${ico('trash')}</button></div>`;
+    e.querySelector('[data-a=c]').onclick = () => copy(i.link);
+    e.querySelector('[data-a=d]').onclick = async () => {
+      if (!confirm('"' + i.name + '" মুছবেন? টেলিগ্রাম গ্রুপ থেকেও ডিলিট হবে, লিংক অচল হবে।')) return;
+      const r = await api('/api/files/' + i.id, 'DELETE');
+      if (r.ok) { all = all.filter(x => x.id !== i.id); render(); loadStats(true); toast('ডিলিট হয়েছে'); } else toast(r.error || 'ব্যর্থ', true);
+    };
+    $('list').appendChild(e);
+  });
+  if (!$('list').children.length) $('list').innerHTML = '<div class="hint" style="padding:18px 0">কোনো ফাইল নেই</div>';
+}
+$('q').oninput = render;
+document.querySelectorAll('#chips .chip').forEach(c => c.onclick = () => { kind = c.dataset.k; document.querySelectorAll('#chips .chip').forEach(x => x.classList.toggle('on', x === c)); render(); });
+let statsAt = 0;
+async function loadStats(force) {
+  if (!force && Date.now() - statsAt < 30000) return; statsAt = Date.now();
+  const s = await api('/api/stats'); if (s.ok) { $('sCount').textContent = s.count + (s.partial ? '+' : ''); $('sSize').textContent = s.size_h + (s.partial ? '+' : ''); }
+}
+
+// ---- সেটিংস সেভ
+async function saveTg() {
+  const body = {api_id: $('apiId').value, api_hash: $('apiHash').value, token: $('tok').value, group_id: $('gid').value === (ST.group_id || '') ? '' : $('gid').value};
+  if (!body.api_id && !body.api_hash && !body.token && !body.group_id) return toast('কিছু বদলানো হয়নি', true);
+  const b = $('tgSave'); b.disabled = true; b.textContent = 'কানেক্ট হচ্ছে…';
+  const r = await api('/api/settings/telegram', 'POST', body);
+  b.disabled = false; b.textContent = 'সেভ ও কানেক্ট';
+  if (r.ok) {
+    ['apiId', 'apiHash', 'tok'].forEach(i => $(i).value = '');
+    toast('কানেক্ট হয়েছে' + (r.bot ? ' — @' + r.bot : '') + (r.render ? ' · Render-এ সেভ' : ''));
+    formFilled = false; await loadStatus(); runDiag(); statsAt = 0; $('list').innerHTML = '';
+  } else toast(r.error || 'ব্যর্থ', true);
+}
+async function reconnect() { toast('কানেক্ট হচ্ছে…'); const r = await api('/api/reconnect', 'POST'); toast(r.ok ? 'কানেক্টেড' : (r.error || 'ব্যর্থ'), !r.ok); await loadStatus(); runDiag(); }
+async function savePw() {
+  const r = await api('/api/settings/password', 'POST', {current: $('pwOld').value, new: $('pwNew').value});
+  if (r.ok) { $('pwOld').value = $('pwNew').value = ''; toast('পাসওয়ার্ড বদলেছে'); loadStatus(); } else toast(r.error || 'ব্যর্থ', true);
+}
+async function saveGen(sec) {
+  const body = {};
+  CFG_IDS.forEach(k => { const e = $('c_' + k); if (e && e.offsetParent !== null) body[k] = e.type === 'number' ? +e.value : e.value; });
+  CFG_BOOLS.forEach(k => { const e = $('c_' + k); if (e && e.offsetParent !== null) body[k] = e.checked; });
+  const r = await api('/api/settings/general', 'POST', body);
+  toast(r.ok ? 'সেভ হয়েছে' : (r.error || 'ব্যর্থ'), !r.ok);
+  if (r.ok) { formFilled = false; loadStatus(); if (body.accent || body.site_name) toast('রঙ/নাম পরের বার পেজ রিলোডে বদলাবে'); }
+}
+async function regenKey() { if (!confirm('পুরোনো API কী অচল হবে। চালিয়ে যাবেন?')) return; const r = await api('/api/settings/general', 'POST', {regen_api_key: true}); if (r.ok) { toast('নতুন কী তৈরি হয়েছে'); loadStatus(); } else toast(r.error || 'ব্যর্থ', true); }
+async function regenSecret() {
+  if (!confirm('সব আগের লিংক অচল হবে। নিশ্চিত?')) return;
+  const r = await api('/api/settings/regen-link-secret', 'POST'); toast(r.ok ? 'লিংক রিসেট হয়েছে' : (r.error || 'ব্যর্থ'), !r.ok); $('list').innerHTML = '';
+}
+async function saveSrv(withKey) {
+  const body = {public_url: $('pubUrl').value};
+  if ($('rKey').value) body.render_key = $('rKey').value;
+  if ($('rSvc').value) body.render_service = $('rSvc').value;
+  const r = await api('/api/settings/server', 'POST', body);
+  if (r.ok) { $('rKey').value = ''; toast(r.sync_msg || 'সেভ হয়েছে'); formFilled = false; loadStatus(); } else toast(r.error || 'ব্যর্থ', true);
+}
+async function renderSync() { const r = await api('/api/render-sync', 'POST'); toast(r.sync_msg || (r.ok ? 'সেভ হয়েছে' : 'ব্যর্থ'), !r.ok); loadStatus(); }
+async function restartSrv() {
+  if (!confirm('সার্ভার রিস্টার্ট হবে (কয়েক সেকেন্ড বন্ধ থাকবে)। Render নিজে আবার চালু করবে। এগোবেন?')) return;
+  await api('/api/restart', 'POST'); toast('রিস্টার্ট হচ্ছে… ১০-২০ সেকেন্ড পর রিফ্রেশ করুন');
+}
+
+// ---- লগ
+async function loadLogs() {
+  const d = await api('/api/logs'); if (!d.ok) return;
+  $('logbox').innerHTML = d.logs.map(l => `<div class="${esc(l.l)}"><time>${new Date(l.t * 1000).toLocaleTimeString('bn-BD')}</time> ${esc(l.m)}</div>`).join('') || '<div class="hint">কোনো লগ নেই</div>';
+  $('logbox').scrollTop = 1e9;
+}
+const h0 = (location.hash || '').slice(1); if (TITLES[h0]) go(h0);
+</script>
+</body>
+</html>
