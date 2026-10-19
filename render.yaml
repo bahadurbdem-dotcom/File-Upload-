@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: ay-file-host
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      # শুধু এটুকুই ডিপ্লয়ের সময় দরকার — বাকি সব (API ID/Hash, বট টোকেন, গ্রুপ আইডি) অ্যাডমিন প্যানেল থেকে দেবেন
+      - key: ADMIN_PASSWORD
+        sync: false
