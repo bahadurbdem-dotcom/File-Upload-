@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b0d12">
+<title>{{SITE}}</title>
+<style>
+  :root{--bg:#0b0d12;--card:#141821;--line:#242b38;--txt:#e8eaf0;--mut:#8b93a5;--acc:{{ACCENT}}}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;padding:16px;background:
+    radial-gradient(700px 420px at 50% -8%,color-mix(in srgb,var(--acc) 28%,transparent),transparent),var(--bg);
+    color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Bengali",sans-serif}
+  .card{width:min(400px,100%);background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 26px;box-shadow:0 24px 70px #000a}
+  .logo{width:56px;height:56px;border-radius:16px;margin:0 auto 16px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--acc),color-mix(in srgb,var(--acc) 55%,#8b5cf6))}
+  .logo svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  h1{font-size:21px;text-align:center;margin:0 0 6px}
+  p{color:var(--mut);text-align:center;margin:0 0 22px;font-size:14px;line-height:1.55}
+  .f{position:relative;margin-bottom:12px}
+  input{width:100%;padding:14px 46px 14px 14px;border-radius:12px;border:1px solid var(--line);background:#0e1219;color:var(--txt);font-size:16px;outline:none;transition:border-color .15s}
+  input:focus{border-color:var(--acc)}
+  .eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--mut);padding:8px;cursor:pointer;width:auto;margin:0;font-size:13px}
+  button.go{width:100%;margin-top:6px;padding:14px;border:0;border-radius:12px;background:var(--acc);color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:filter .15s}
+  button.go:hover{filter:brightness(1.1)} button.go:disabled{opacity:.6;cursor:default}
+  #err{color:#ff7b7b;text-align:center;font-size:14px;min-height:20px;margin-top:12px}
+  .note{margin-top:14px;font-size:12.5px;color:var(--mut);text-align:center;line-height:1.55}
+</style>
+</head>
+<body>
+<form class="card" id="f" autocomplete="on">
+  <div class="logo"><svg viewBox="0 0 24 24"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.35 8.5 4.5 4.5 0 0 0 7 19z"/></svg></div>
+  <h1>{{SITE}}</h1>
+  <p id="sub"></p>
+  <div class="f"><input id="pw" type="password" autofocus required><button type="button" class="eye" id="eye">দেখুন</button></div>
+  <div class="f" id="f2" style="display:none"><input id="pw2" type="password" placeholder="পাসওয়ার্ড আবার লিখুন" autocomplete="new-password"></div>
+  <button class="go" id="b"></button>
+  <div id="err"></div>
+  <div class="note" id="note"></div>
+</form>
+<script>
+const MODE = '{{MODE}}';
+const $ = id => document.getElementById(id);
+if (MODE === 'setup') {
+  $('sub').textContent = 'স্বাগতম! শুরু করতে অ্যাডমিন পাসওয়ার্ড তৈরি করুন (কমপক্ষে ৬ অক্ষর)।';
+  $('pw').placeholder = 'নতুন পাসওয়ার্ড'; $('pw').autocomplete = 'new-password';
+  $('f2').style.display = ''; $('b').textContent = 'পাসওয়ার্ড সেট করে শুরু করুন';
+  $('note').textContent = 'এরপর টেলিগ্রামের API ID, Hash, বট টোকেন ও গ্রুপ আইডি প্যানেল থেকেই দিতে পারবেন।';
+} else {
+  $('sub').textContent = 'অ্যাডমিন প্যানেলে ঢুকতে পাসওয়ার্ড দিন';
+  $('pw').placeholder = 'পাসওয়ার্ড'; $('pw').autocomplete = 'current-password';
+  $('b').textContent = 'প্রবেশ করুন';
+}
+$('eye').onclick = () => { const s = $('pw').type === 'password'; $('pw').type = s ? 'text' : 'password'; $('eye').textContent = s ? 'লুকান' : 'দেখুন'; };
+$('f').onsubmit = async e => {
+  e.preventDefault();
+  const b = $('b'), err = $('err'); err.textContent = '';
+  if (MODE === 'setup' && $('pw').value !== $('pw2').value) { err.textContent = 'দুই জায়গায় পাসওয়ার্ড মেলেনি'; return; }
+  b.disabled = true;
+  try {
+    const r = await fetch(MODE === 'setup' ? '/api/setup' : '/api/login', {method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({password: $('pw').value})});
+    const d = await r.json();
+    if (d.ok) location.reload(); else err.textContent = d.error || 'ব্যর্থ';
+  } catch (_) { err.textContent = 'সার্ভারে সংযোগ হচ্ছে না'; }
+  b.disabled = false;
+};
+</script>
+</body>
+</html>
